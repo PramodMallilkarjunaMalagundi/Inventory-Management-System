@@ -156,14 +156,14 @@ const InventoryList = ({ user }) => {
       onClick={() => handleEdit(item)}
       className="px-2.5 py-1 text-xs border border-blue-200 text-blue-600 rounded-md hover:bg-blue-50 transition"
     >
-      ✏️ Edit
+       Edit
     </button>
 
     <button
       onClick={() => deleteItem(item._id)}
       className="px-2.5 py-1 text-xs border border-red-200 text-red-600 rounded-md hover:bg-red-50 transition"
     >
-      🗑 Delete
+       Delete
     </button>
 
   </div>
