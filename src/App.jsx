@@ -10,7 +10,7 @@ import MasterDataManager from "./components/MasterDataManager";
 import AIPanel from "./components/AIPanel";
 import SettingsView from "./components/SettingsView";
 
-const API_BASE = "http://localhost:5000";
+const API_BASE = "https://inventory-management-system-backend-wrft.onrender.com";
 
 function App() {
   const [user, setUser] = useState(null);
