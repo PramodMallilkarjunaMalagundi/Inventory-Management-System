@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 
-const API_BASE = "http://localhost:5000";
+const API_BASE = "https://inventory-management-system-backend-wrft.onrender.com";
 
 export default function SettingsView({ user, onLogout }) {
   const [name, setName] = useState(user?.name || "");

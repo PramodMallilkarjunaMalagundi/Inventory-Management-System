@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 
-const API_BASE = "http://localhost:5000";
+const API_BASE = "https://inventory-management-system-backend-wrft.onrender.com";
 
 export default function ActivityLog() {
   const [logs, setLogs] = useState([]);

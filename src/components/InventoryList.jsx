@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import EditItemModal from "./EditItemModal";
 
-const API_BASE = "http://localhost:5000";
+const API_BASE = "https://inventory-management-system-backend-wrft.onrender.com";
 
 const InventoryList = ({ user }) => {
   const [items, setItems] = useState([]);

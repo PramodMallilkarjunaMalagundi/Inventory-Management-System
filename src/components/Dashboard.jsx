@@ -24,7 +24,7 @@ ChartJS.register(
   Legend
 );
 
-const API = "http://localhost:5000";
+const API = "https://inventory-management-system-backend-wrft.onrender.com";
 
 export default function Dashboard() {
   const [items, setItems] = useState([]);

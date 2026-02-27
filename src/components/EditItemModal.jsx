@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 
-const API_BASE = "http://localhost:5000";
+const API_BASE = "https://inventory-management-system-backend-wrft.onrender.com";
 
 export default function EditItemModal({ item, onClose, onUpdated }) {
   const [form, setForm] = useState(item);

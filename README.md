@@ -159,7 +159,7 @@ node server.js
 Backend runs at:
 
 ```
-http://localhost:5000
+https://inventory-management-system-backend-wrft.onrender.com
 ```
 
 ---
