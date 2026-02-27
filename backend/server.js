@@ -7,14 +7,14 @@ const app = express();
 
 /* 🔐 MIDDLEWARE */
 app.use(cors({
-  origin: "http://localhost:5173",
+  origin: ["http://localhost:5173", "https://inventory-management-system-sepia-three.vercel.app"],
   credentials: true
 }));
 app.use(express.json());
 
 /* 🔗 CONNECT MONGODB */
 mongoose
-  .connect("mongodb://127.0.0.1:27017/inventrack")
+  .connect(process.env.MONGO_URI)
   .then(() => console.log("✅ MongoDB Connected"))
   .catch((err) => console.log("❌ Mongo Error:", err));
 
@@ -185,7 +185,7 @@ app.get("/activity", async (req, res) => {
   res.json(await ActivityLog.find().sort({ createdAt: -1 }));
 });
 
-/* ================= AI INSIGHTS (WORKING VERSION) ================= */
+/* ================= AI INSIGHTS ================= */
 
 app.get("/ai-insights", async (req, res) => {
   try {
@@ -204,41 +204,19 @@ app.get("/ai-insights", async (req, res) => {
       totalValue += value;
       totalUnits += item.quantity;
 
-      if (item.quantity <= 10) {
-        lowStock.push({ name: item.name, qty: item.quantity });
-      }
-
-      if (item.quantity >= 100) {
-        overStock.push({ name: item.name, qty: item.quantity });
-      }
-
-      if (value >= 50000) {
-        highValue.push({ name: item.name, value });
-      }
+      if (item.quantity <= 10) lowStock.push({ name: item.name, qty: item.quantity });
+      if (item.quantity >= 100) overStock.push({ name: item.name, qty: item.quantity });
+      if (value >= 50000) highValue.push({ name: item.name, value });
     });
 
     const suggestions = [];
 
-    if (lowStock.length > 0)
-      suggestions.push("Some items are running low. Reorder soon.");
+    if (lowStock.length > 0) suggestions.push("Some items are running low. Reorder soon.");
+    if (overStock.length > 0) suggestions.push("You have overstock items. Reduce inventory.");
+    if (highValue.length > 0) suggestions.push("High value items detected. Monitor closely.");
+    if (suggestions.length === 0) suggestions.push("Inventory looks healthy and balanced.");
 
-    if (overStock.length > 0)
-      suggestions.push("You have overstock items. Reduce inventory.");
-
-    if (highValue.length > 0)
-      suggestions.push("High value items detected. Monitor closely.");
-
-    if (suggestions.length === 0)
-      suggestions.push("Inventory looks healthy and balanced.");
-
-    res.json({
-      totalValue,
-      totalUnits,
-      lowStock,
-      overStock,
-      highValue,
-      suggestions
-    });
+    res.json({ totalValue, totalUnits, lowStock, overStock, highValue, suggestions });
 
   } catch (err) {
     res.status(500).json({ message: "Insights error" });
@@ -246,6 +224,8 @@ app.get("/ai-insights", async (req, res) => {
 });
 
 /* 🚀 START SERVER */
-app.listen(5000, () => {
-  console.log("🔥 Server running on http://localhost:5000");
+const PORT = process.env.PORT || 5000;
+
+app.listen(PORT, () => {
+  console.log(`🔥 Server running on port ${PORT}`);
 });
